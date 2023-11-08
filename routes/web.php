@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::post("/api/auth/login", function (Request $request) {
+
+    if (\Illuminate\Support\Facades\Auth::attempt($request->all())) {
+        $user = \Illuminate\Support\Facades\Auth::user();
+
+        $authToken = $user->createToken("auth-token");
+        return ['token' => $authToken->plainTextToken];
+    }
+
+    return ['token' => "null"];
 });
