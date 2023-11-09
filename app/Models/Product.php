@@ -17,4 +17,8 @@ class Product extends Model
         'price',
         'active',
     ];
+
+    protected $casts = [
+        'active' => 'boolean',
+    ];
 }
